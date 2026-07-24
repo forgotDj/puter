@@ -11,6 +11,11 @@
     --select-saturation: 74.22%;
     --select-lightness: 55.88%;
     --select-color: hsl(var(--select-hue), var(--select-saturation), var(--select-lightness));
+    /* Selection surfaces: a quiet accent wash + hairline ring instead of a
+       solid accent fill, so icons and labels keep their natural colors. */
+    --select-tint: hsla(var(--select-hue), var(--select-saturation), var(--select-lightness), 0.1);
+    --select-tint-strong: hsla(var(--select-hue), var(--select-saturation), var(--select-lightness), 0.2);
+    --select-ring: hsla(var(--select-hue), var(--select-saturation), var(--select-lightness), 0.4);
 
     --dashboard-text: #444;
     --dashboard-border: #e0e0e0;
@@ -111,6 +116,11 @@ body {
         --primary-color: var(--dashboard-border);
         --primary-color-icon: invert(1);
         --primary-color-sidebar-item: #e8e8e8;
+
+        /* Alpha tints need a little more presence over dark surfaces */
+        --select-tint: hsla(var(--select-hue), var(--select-saturation), var(--select-lightness), 0.16);
+        --select-tint-strong: hsla(var(--select-hue), var(--select-saturation), var(--select-lightness), 0.28);
+        --select-ring: hsla(var(--select-hue), var(--select-saturation), var(--select-lightness), 0.5);
 
         --dashboard-text: #d4d4d4;
         --dashboard-border: #3d3d3d;
@@ -1688,13 +1698,13 @@ body.myapps-reordering .myapps-tile {
 }
 
 .dashboard-section-files .row.selected {
-    color: var(--primary-color-sidebar-item);
-    background-color: var(--select-color);
+    color: var(--dashboard-text-primary);
+    background-color: var(--select-tint);
     border-radius: 3px;
 }
 
 @keyframes item-added-highlight {
-    from { background-color: var(--select-color); }
+    from { background-color: var(--select-tint-strong); }
     to { background-color: transparent; }
 }
 
@@ -1790,12 +1800,12 @@ body.myapps-reordering .myapps-tile {
     }
 
     .dashboard-section-files .row.selected:hover .item-more {
-        color: var(--primary-color-sidebar-item);
+        color: var(--dashboard-text);
     }
 }
 
 .dashboard-section-files .row.selected .item-more {
-    color: var(--primary-color-sidebar-item);
+    color: var(--dashboard-text-secondary);
 }
 
 .dashboard-section-files.ui-draggable-dragging {
@@ -2176,7 +2186,7 @@ body.myapps-reordering .myapps-tile {
     width: 24px;
     height: 24px;
     padding: 0;
-    background: var(--dashboard-background);
+    background: transparent;
     border-radius: 2px;
 }
 
@@ -2284,9 +2294,8 @@ body.myapps-reordering .myapps-tile {
 }
 
 .dashboard-section-files .files-tab .files.files-grid-view .row.selected {
-    background-color: var(--select-color);
-    color: var(--dashboard-background);
-    border-color: var(--select-color);
+    background-color: var(--select-tint);
+    border-color: var(--select-ring);
 }
 
 .dashboard-section-files .files-tab .files.files-grid-view .row .item-icon {
@@ -2346,16 +2355,24 @@ body.myapps-reordering .myapps-tile {
     .dashboard-section-files .files-tab .files.files-grid-view .row:hover .item-more,
     .dashboard-section-files .files-tab .files.files-grid-view .row.has-open-contextmenu .item-more {
         position: absolute;
-        top: 1px;
-        right: 1px;
-        color: #666;
-        background: var(--dashboard-sidebar-background);
+        top: 6px;
+        right: 6px;
+        color: var(--dashboard-text-secondary);
+        background: var(--dashboard-card-background);
+        border: 1px solid var(--dashboard-border);
+        box-shadow: 0 1px 2px var(--dashboard-shadow-subtle);
         width: 24px;
         height: 24px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 7px;
+        border-radius: 6px;
+        transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .dashboard-section-files .files-tab .files.files-grid-view .row .item-more:hover {
+        color: var(--dashboard-text-primary);
+        background: var(--dashboard-hover);
     }
 }
 
