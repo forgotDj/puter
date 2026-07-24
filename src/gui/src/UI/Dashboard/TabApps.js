@@ -9,12 +9,6 @@ import { reconcileAppOrder, serializeAppOrder, mergeSavedOrder, APPS_ORDER_KV_KE
 const APP_NAMES_NO_UNINSTALL = new Set([
     'dev-center',
     'app-center',
-    'editor',
-    'camera',
-    'recorder',
-    'memos',
-    'music-player',
-    'ai',
 ]);
 
 /*
